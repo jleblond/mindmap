@@ -8,11 +8,9 @@ import Turbolinks from "turbolinks"
 import * as ActiveStorage from "@rails/activestorage"
 import "channels"
 
-import JQuery from "jquery"
 import P5 from "p5"
 
 Rails.start()
 Turbolinks.start()
 ActiveStorage.start()
-JQuery.start()
 P5.start()
