@@ -32,12 +32,6 @@ class DiagramsController < ApplicationController
   private
 
   def diagram_params
-    params.require(:diagram).permit(:name, :description, :user_id, :image)
+    params.require(:diagram).permit(:name, :description, :user_id)
   end
-
-  def require_edit_permission
-    diagram = Diagram.find_by_id(params[:id])
-    return current_user.id == diagram.try(:user_id) ? true : false
-  end
-
 end

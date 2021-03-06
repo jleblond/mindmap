@@ -1,22 +1,6 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
-  <!--  <script src="https://cdn.jsdelivr.net/npm/p5@1.2.0/lib/p5.js"></script>-->
-  <meta charset="utf-8" />
-  <title>Demo</title>
-  <style>
-      body {
-          margin: 0;
-          padding: 0;
-          overflow: hidden;
-          background-color: #f0f0f0;
-      }
-  </style>
-</head>
-<body>
 <main></main>
 
+<% canvas_background_url =  @canvas.has_background? ? url_for(@canvas.background) : nil %>
 
 <script>
     class Bubble {
@@ -116,7 +100,9 @@
 
     function setup() {
         createCanvas(720, 400);
-        img = loadImage('https://st.depositphotos.com/1373150/3567/i/600/depositphotos_35670209-stock-photo-3d-illustration-of-a-neuron.jpg'); // Load the image
+        url = "<%= url_for(@canvas.background) %>"
+        console.log(url)
+        img = loadImage(url); // Load the image
         loadData();
     }
 
@@ -136,5 +122,3 @@
         text('Click to add bubbles.', 10, height - 10);
     }
 </script>
-</body>
-</html>

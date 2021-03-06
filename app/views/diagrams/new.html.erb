@@ -1,0 +1,13 @@
+<h2>Diagram</h2>
+
+<%= form_for(@diagram, :url => { :action => "create" })  do |f| %>
+  <div class="form-group">
+    <%= f.label :name, "Diagram Name (*)" %>
+    <%= f.text_field :name, class:"form-control" %>
+  </div>
+  <div class="form-group">
+    <%= f.label :description %>
+    <%= f.text_area :description, class:"form-control", cols: "30", rows: "7" %>
+  </div>
+  <%= f.submit "Save", class: "btn btn-primary" %>
+<% end %>

@@ -1,0 +1,13 @@
+<%#= @diagram.id %>
+
+<h2> Diagram Info </h2>
+<% @diagram.id %>
+<% @diagram.name %>
+<% @diagram.description %>
+
+
+<% if @diagram.canvas %>
+  <a href="<%= edit_diagram_canvas_path(@diagram) %>"> See Canvas </a>
+<% else %>
+  <a href="<%= new_diagram_canvas_path(@diagram) %>"> + Canvas </a>
+<% end %>
