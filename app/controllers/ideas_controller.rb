@@ -17,6 +17,13 @@ class IdeasController < ApplicationController
     end
   end
 
+  def update
+    idea = Idea.find_by_id(params[:id])
+    idea.x_pos = params[:idea][:x_pos]
+    idea.y_pos = params[:idea][:y_pos]
+    idea.save
+  end
+
   private
 
   def idea_params
