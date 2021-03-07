@@ -11,7 +11,7 @@
             this.radius = diameter / 2;
             this.name = name;
 
-            this.over = false;
+            this.over = true;
         }
 
         // Check if mouse is over the bubble
@@ -26,16 +26,31 @@
             strokeWeight(0.8);
             noFill();
             ellipse(this.x, this.y, this.diameter, this.diameter);
-            if (this.over) {
-                fill(0);
-                textAlign(CENTER);
-                text(this.name, this.x, this.y + this.radius + 20);
-            }
+            // if (this.over) {
+            //     fill(0);
+            //     textAlign(CENTER);
+            //     text(this.name, this.x, this.y + this.radius + 20);
+            // }
+
+            fill(0);
+            textAlign(CENTER);
+            text(this.name, this.x, this.y - this.radius/5);
+
         }
     }
 
+    let cnv, img;
     let bubbles = []; // Global array to hold all bubble objects
-    let data = {}
+
+
+    function setup() {
+        cnv = createCanvas(720, 400);
+        url = "<%= url_for(@canvas.background) %>"
+        console.log(url)
+        img = loadImage(url); // Load the image
+        loadData();
+        cnv.mousePressed(cnvMousePressed);
+    }
 
 
     // Convert saved Bubble data into Bubble Objects
@@ -48,6 +63,7 @@
                 console.log('blalbalbla')
                 bubbles = []
                 console.log(data)
+
                 for (let i = 0; i < data.length; i++) {
                     // Get each object in the array
                     let bubble = data[i];
@@ -69,19 +85,11 @@
 
     }
 
-    window.onload = function(){
-        loadData();
-    }
-
-
-    // Create a new Bubble each time the mouse is clicked.
-    function mousePressed() {
+    function cnvMousePressed(){
         // Add diameter and label to bubble
         let diameter = random(40, 80);
         let label = 'New Label';
 
-        // Append the new JSON bubble object to the array
-        bubbles.push(new Bubble(mouseX, mouseY, diameter, label));
 
         $.ajax({
             type: "POST",
@@ -89,7 +97,7 @@
             data: { idea: { label: label, description: "", url: "", shape_type: 'CIRCLE', x_pos: mouseX, y_pos: mouseY, diameter: diameter } },
             success(data) {
                 console.log(data);
-
+                loadData();
                 return false;
             },
             error(data) {
@@ -103,16 +111,6 @@
         // }
     }
 
-
-    let img; // Declare variable 'img'.
-
-    function setup() {
-        createCanvas(720, 400);
-        url = "<%= url_for(@canvas.background) %>"
-        console.log(url)
-        img = loadImage(url); // Load the image
-        loadData();
-    }
 
     function draw() {
         // Displays the image at its actual size at point (0,0)
