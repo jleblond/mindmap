@@ -40,6 +40,7 @@
     }
 
     let cnv, img;
+    let fetchedData = {};
     let bubbles = []; // Global array to hold all bubble objects
 
 
@@ -63,6 +64,7 @@
                 console.log('blalbalbla')
                 bubbles = []
                 console.log(data)
+                fetchedData = data
 
                 for (let i = 0; i < data.length; i++) {
                     // Get each object in the array
@@ -85,11 +87,23 @@
 
     }
 
-    function cnvMousePressed(){
+    function isPointInEllipse(x, y, h, k, r){
+        // ref: https://math.stackexchange.com/questions/76457/check-if-a-point-is-within-an-ellipse/76463#76463
+
+        // x, y coordinates of the point to check
+        // h,k coordinates of the origin of the ellipse
+        // r rayon of the ellipse  (r = diameter/2)
+
+        let denominator = Math.pow(r, 2)
+        let result = Math.pow(x-h, 2) / denominator + Math.pow(y-k, 2)/ denominator
+        return (result <= 1) ? true : false
+
+    }
+
+    function createIdea(){
         // Add diameter and label to bubble
         let diameter = random(40, 80);
         let label = 'New Label';
-
 
         $.ajax({
             type: "POST",
@@ -109,6 +123,23 @@
         // if (bubbles.length > 10) {
         //     bubbles.shift(); // remove first item from array
         // }
+    }
+
+    function cnvMousePressed(){
+        let mouseInIdea = false;
+        for (let i = 0; i < bubbles.length; i++) {
+            let bubble = bubbles[i];
+            if(isPointInEllipse(mouseX, mouseY, bubble.x, bubble.y, bubble.radius)){
+                mouseInIdea = true;
+                break;
+            }
+        }
+
+        if(!mouseInIdea){
+            createIdea()
+        }else {
+            alert( 'object exists there')
+        }
     }
 
 
