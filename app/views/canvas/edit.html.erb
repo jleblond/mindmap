@@ -34,51 +34,45 @@
         }
     }
 
-    // var data; // Global object to hold results from the loadJSON call
     let bubbles = []; // Global array to hold all bubble objects
-    let url = '/assets/bubbles.json'
-
-    let data = { "bubbles":
-            [ { "position": { "x": 160, "y": 103 }, "diameter": 43.19838, "label": "Happy" },
-                { "position": { "x": 372, "y": 137 }, "diameter": 52.42526, "label": "Sad" }
-            ]
-    }
-
-    // Put any asynchronous data loading in preload to complete before "setup" is run
-    // function preload() {
-    //     fetch(url).then(function(response){
-    //         return response.text().then(function(text) {
-    //             console.log(text);
-    //             data = JSON.parse(text);
-    //             let a = data;
-    //         });
-    //     });
-    // }
-
+    let data = {}
 
 
     // Convert saved Bubble data into Bubble Objects
     function loadData() {
-        let bubbleData = data?.bubbles;
-        if(bubbleData) {
-            for (let i = 0; i < bubbleData.length; i++) {
-                // Get each object in the array
-                let bubble = bubbleData[i];
-                // Get a position object
-                let position = bubble['position'];
-                // Get x,y from position
-                let x = position['x'];
-                let y = position['y'];
+        $.ajax({
+            type: "GET",
+            url: "<%=diagram_canvas_ideas_path(@canvas.diagram)%>",
+            dataType: "json",
+            success: function(data){
+                console.log('blalbalbla')
+                bubbles = []
+                console.log(data)
+                for (let i = 0; i < data.length; i++) {
+                    // Get each object in the array
+                    let bubble = data[i];
+                    // Get x,y from position
+                    let x = bubble['x_pos'];
+                    let y = bubble['y_pos'];
 
-                // Get diameter and label
-                let diameter = bubble['diameter'];
-                let label = bubble['label'];
+                    // Get diameter and label
+                    let diameter = bubble['diameter'];
+                    let label = bubble['label'];
 
-                // Put object in array
-                bubbles.push(new Bubble(x, y, diameter, label));
+                    // Put object in array
+                    bubbles.push(new Bubble(x, y, diameter, label));
+                }
+
+                draw();
             }
-        }
+        });
+
     }
+
+    window.onload = function(){
+        loadData();
+    }
+
 
     // Create a new Bubble each time the mouse is clicked.
     function mousePressed() {
@@ -88,6 +82,20 @@
 
         // Append the new JSON bubble object to the array
         bubbles.push(new Bubble(mouseX, mouseY, diameter, label));
+
+        $.ajax({
+            type: "POST",
+            url: "<%=diagram_canvas_ideas_path(@canvas.diagram)%>",
+            data: { idea: { label: label, description: "", url: "", shape_type: 'CIRCLE', x_pos: mouseX, y_pos: mouseY, diameter: diameter } },
+            success(data) {
+                console.log(data);
+
+                return false;
+            },
+            error(data) {
+                return false;
+            }
+        });
 
         // Prune Bubble Count if there are too many
         // if (bubbles.length > 10) {
@@ -122,3 +130,5 @@
         text('Click to add bubbles.', 10, height - 10);
     }
 </script>
+
+

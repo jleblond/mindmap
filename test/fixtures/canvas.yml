@@ -1,4 +1,12 @@
-# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+# == Schema Information
+#
+# Table name: canvas
+#
+#  id         :integer          not null, primary key
+#  diagram_id :integer
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#
 
 one:
   diagram_id: 1
