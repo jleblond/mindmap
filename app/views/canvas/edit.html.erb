@@ -1,163 +1,166 @@
-<main></main>
+<body>
+  <main></main>
 
-<% canvas_background_url =  @canvas.has_background? ? url_for(@canvas.background) : nil %>
+  <% canvas_background_url =  @canvas.has_background? ? url_for(@canvas.background) : nil %>
 
-<script>
-    class Bubble {
-        constructor(x, y, diameter, name) {
-            this.x = x;
-            this.y = y;
-            this.diameter = diameter;
-            this.radius = diameter / 2;
-            this.name = name;
+  <script>
+      class BubbleIdea {
+          constructor(x, y, diameter, name) {
+              this.x = x;
+              this.y = y;
+              this.diameter = diameter;
+              this.radius = diameter / 2;
+              this.name = name;
 
-            this.over = true;
-        }
+              this.over = true;
+          }
 
-        // Check if mouse is over the bubble
-        rollover(px, py) {
-            let d = dist(px, py, this.x, this.y);
-            this.over = d < this.radius;
-        }
+          // Check if mouse is over the bubble
+          rollover(px, py) {
+              let d = dist(px, py, this.x, this.y);
+              this.over = d < this.radius;
+          }
 
-        // Display the Bubble
-        display() {
-            stroke('red');
-            strokeWeight(0.8);
-            noFill();
-            ellipse(this.x, this.y, this.diameter, this.diameter);
-            // if (this.over) {
-            //     fill(0);
-            //     textAlign(CENTER);
-            //     text(this.name, this.x, this.y + this.radius + 20);
-            // }
+          // Display the Bubble
+          display() {
+              stroke('red');
+              strokeWeight(0.8);
+              noFill();
+              ellipse(this.x, this.y, this.diameter, this.diameter);
+              // if (this.over) {
+              //     fill(0);
+              //     textAlign(CENTER);
+              //     text(this.name, this.x, this.y + this.radius + 20);
+              // }
 
-            fill(0);
-            textAlign(CENTER);
-            text(this.name, this.x, this.y - this.radius/5);
+              fill(0);
+              textAlign(CENTER);
+              text(this.name, this.x, this.y - this.radius/5);
 
-        }
-    }
+          }
+      }
 
-    let cnv, img;
-    let fetchedData = {};
-    let bubbles = []; // Global array to hold all bubble objects
-
-
-    function setup() {
-        cnv = createCanvas(720, 400);
-        url = "<%= url_for(@canvas.background) %>"
-        console.log(url)
-        img = loadImage(url); // Load the image
-        loadData();
-        cnv.mousePressed(cnvMousePressed);
-    }
+      let cnv, img;
+      let fetchedData = {};
+      let bubbles = []; // Global array to hold all bubble objects
 
 
-    // Convert saved Bubble data into Bubble Objects
-    function loadData() {
-        $.ajax({
-            type: "GET",
-            url: "<%=diagram_canvas_ideas_path(@canvas.diagram)%>",
-            dataType: "json",
-            success: function(data){
-                console.log('blalbalbla')
-                bubbles = []
-                console.log(data)
-                fetchedData = data
-
-                for (let i = 0; i < data.length; i++) {
-                    // Get each object in the array
-                    let bubble = data[i];
-                    // Get x,y from position
-                    let x = bubble['x_pos'];
-                    let y = bubble['y_pos'];
-
-                    // Get diameter and label
-                    let diameter = bubble['diameter'];
-                    let label = bubble['label'];
-
-                    // Put object in array
-                    bubbles.push(new Bubble(x, y, diameter, label));
-                }
-
-                draw();
-            }
-        });
-
-    }
-
-    function isPointInEllipse(x, y, h, k, r){
-        // ref: https://math.stackexchange.com/questions/76457/check-if-a-point-is-within-an-ellipse/76463#76463
-
-        // x, y coordinates of the point to check
-        // h,k coordinates of the origin of the ellipse
-        // r rayon of the ellipse  (r = diameter/2)
-
-        let denominator = Math.pow(r, 2)
-        let result = Math.pow(x-h, 2) / denominator + Math.pow(y-k, 2)/ denominator
-        return (result <= 1) ? true : false
-
-    }
-
-    function createIdea(){
-        // Add diameter and label to bubble
-        let diameter = random(40, 80);
-        let label = 'New Label';
-
-        $.ajax({
-            type: "POST",
-            url: "<%=diagram_canvas_ideas_path(@canvas.diagram)%>",
-            data: { idea: { label: label, description: "", url: "", shape_type: 'CIRCLE', x_pos: mouseX, y_pos: mouseY, diameter: diameter } },
-            success(data) {
-                console.log(data);
-                loadData();
-                return false;
-            },
-            error(data) {
-                return false;
-            }
-        });
-
-        // Prune Bubble Count if there are too many
-        // if (bubbles.length > 10) {
-        //     bubbles.shift(); // remove first item from array
-        // }
-    }
-
-    function cnvMousePressed(){
-        let mouseInIdea = false;
-        for (let i = 0; i < bubbles.length; i++) {
-            let bubble = bubbles[i];
-            if(isPointInEllipse(mouseX, mouseY, bubble.x, bubble.y, bubble.radius)){
-                mouseInIdea = true;
-                break;
-            }
-        }
-
-        if(!mouseInIdea){
-            createIdea()
-        }else {
-            alert( 'object exists there')
-        }
-    }
+      function setup() {
+          cnv = createCanvas(720, 400);
+          url = "<%= url_for(@canvas.background) %>"
+          console.log(url)
+          img = loadImage(url); // Load the image
+          loadData();
+          cnv.mousePressed(cnvMousePressed);
+      }
 
 
-    function draw() {
-        // Displays the image at its actual size at point (0,0)
-        image(img, 0, 0);
+      // Convert saved Bubble data into Bubble Objects
+      function loadData() {
+          $.ajax({
+              type: "GET",
+              url: "<%=diagram_canvas_ideas_path(@canvas.diagram)%>",
+              dataType: "json",
+              success: function(data){
+                  console.log('blalbalbla')
+                  bubbles = []
+                  console.log(data)
+                  fetchedData = data
 
-        // Display all bubbles
-        for (let i = 0; i < bubbles.length; i++) {
-            bubbles[i].display();
-            bubbles[i].rollover(mouseX, mouseY);
-        }
+                  for (let i = 0; i < data.length; i++) {
+                      // Get each object in the array
+                      let bubble = data[i];
+                      // Get x,y from position
+                      let x = bubble['x_pos'];
+                      let y = bubble['y_pos'];
 
-        // Label directions at bottom
-        textAlign(LEFT);
-        fill(0);
-        text('Click to add bubbles.', 10, height - 10);
-    }
-</script>
+                      // Get diameter and label
+                      let diameter = bubble['diameter'];
+                      let label = bubble['label'];
+
+                      // Put object in array
+                      bubbles.push(new BubbleIdea(x, y, diameter, label));
+                  }
+
+                  draw();
+              }
+          });
+
+      }
+
+      function isPointInEllipse(x, y, h, k, r){
+          // ref: https://math.stackexchange.com/questions/76457/check-if-a-point-is-within-an-ellipse/76463#76463
+
+          // x, y coordinates of the point to check
+          // h,k coordinates of the origin of the ellipse
+          // r rayon of the ellipse  (r = diameter/2)
+
+          let denominator = Math.pow(r, 2)
+          let result = Math.pow(x-h, 2) / denominator + Math.pow(y-k, 2)/ denominator
+          return (result <= 1) ? true : false
+
+      }
+
+      function createIdea(){
+          // Add diameter and label to bubble
+          let diameter = random(40, 80);
+          let label = 'New Label';
+
+          $.ajax({
+              type: "POST",
+              url: "<%=diagram_canvas_ideas_path(@canvas.diagram)%>",
+              data: { idea: { label: label, description: "", url: "", shape_type: 'CIRCLE', x_pos: mouseX, y_pos: mouseY, diameter: diameter } },
+              success(data) {
+                  console.log(data);
+                  loadData();
+                  return false;
+              },
+              error(data) {
+                  return false;
+              }
+          });
+
+          // Prune Bubble Count if there are too many
+          // if (bubbles.length > 10) {
+          //     bubbles.shift(); // remove first item from array
+          // }
+      }
+
+      function cnvMousePressed(){
+          let mouseInIdea = false;
+          for (let i = 0; i < bubbles.length; i++) {
+              let bubble = bubbles[i];
+              if(isPointInEllipse(mouseX, mouseY, bubble.x, bubble.y, bubble.radius)){
+                  mouseInIdea = true;
+                  break;
+              }
+          }
+
+          if(!mouseInIdea){
+              createIdea()
+          }else {
+              alert( 'object exists there')
+          }
+      }
 
 
+      function draw() {
+          // Displays the image at its actual size at point (0,0)
+          image(img, 0, 0);
+
+          // Display all bubbles
+          for (let i = 0; i < bubbles.length; i++) {
+              bubbles[i].display();
+              bubbles[i].rollover(mouseX, mouseY);
+          }
+
+          // Label directions at bottom
+          textAlign(LEFT);
+          fill(0);
+          text('Click to add bubbles.', 10, height - 10);
+      }
+  </script>
+
+
+
+</body>
