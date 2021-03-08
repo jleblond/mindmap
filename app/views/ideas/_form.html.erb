@@ -1,0 +1,23 @@
+MON FORM
+
+
+<%= idea.id %>
+
+<h2> IDEA Info </h2>
+<%= form_for(idea, :url => { :action => "update" })  do |f| %>
+  <div class="form-group">
+    <%= f.label :label, "Label" %>
+    <%= f.text_field :label, class:"form-control" %>
+  </div>
+  <div class="form-group">
+    <%= f.label :description %>
+    <%= f.text_area :description, class:"form-control", cols: "30", rows: "7" %>
+  </div>
+  <div class="form-group">
+    <%= f.label :url, "url" %>
+    <%= f.text_field :url, class:"form-control" %>
+  </div>
+  <%= f.submit "Save", class: "btn btn-primary" %>
+
+<% end %>
+

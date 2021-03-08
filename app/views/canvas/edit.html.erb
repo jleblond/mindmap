@@ -1,21 +1,14 @@
-<body>
-  <% canvas_background_url =  @canvas.has_background? ? url_for(@canvas.background) : nil %>
-  <%= content_tag :canvas, '', id: 'myCanvas',
-                  data: {
-                    background_src: canvas_background_url,
-                    idea_url: diagram_canvas_ideas_path(@canvas.diagram),
-                    diagram_id: @canvas.diagram.id,
-                  } %>
+<% canvas_background_url =  @canvas.has_background? ? url_for(@canvas.background) : nil %>
+<%= content_tag :canvas, '', id: 'myCanvas',
+                data: {
+                  background_src: canvas_background_url,
+                  idea_url: diagram_canvas_ideas_path(@canvas.diagram),
+                  diagram_id: @canvas.diagram.id,
+                } %>
 
+<%= content_tag :div, '', id: 'editIdea',
+                data: {
+                  diagram_id: @canvas.diagram.id,
+                } %>
 
-  <%= javascript_pack_tag 'custom', 'data-turbolinks-track': 'reload' %>
-
-
-  <script>
-
-
-  </script>
-
-
-
-</body>
+<%= javascript_pack_tag 'custom', 'data-turbolinks-track': 'reload' %>

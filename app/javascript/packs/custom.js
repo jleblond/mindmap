@@ -25,6 +25,7 @@ $(document).ready(function(){
     loadData();
 })
 
+
 canvas.addEventListener('mousedown', function(event) {
     var x = event.pageX - elemLeft,
         y = event.pageY - elemTop;
@@ -36,6 +37,20 @@ canvas.addEventListener('mousedown', function(event) {
             console.log('in element!')
             selectedIdeaIndex = index
             isDrawing = true;
+
+            let idea = ideas[index]
+            let url = `/diagrams/${canvas.getAttribute('data-diagram-id')}/canvas/ideas/${idea.id}/edit?format=js`
+            console.log(url)
+            $.ajax({
+                type: "GET",
+                url: url,
+                success(data) {
+                    return false;
+                },
+                error(data) {
+                    return false;
+                }
+            });
             return;
         }
     });
@@ -47,6 +62,8 @@ canvas.addEventListener('mousedown', function(event) {
     }
 
 }, false);
+
+
 
 canvas.addEventListener('mousemove', function(event) {
     if( isDrawing && selectedIdeaIndex) {
@@ -99,7 +116,7 @@ function updateSelectedIdea(x, y){
     // let label = 'New Label';
     console.log(selectedIdeaIndex)
     let selectedIdea = ideas[selectedIdeaIndex]
-    let url = "/diagrams/" + `${canvas.getAttribute('data-diagram-id')}` + "/canvas/ideas/" + `${selectedIdea.id}`
+    let url = "/diagrams/" + `${canvas.getAttribute('data-diagram-id')}` + "/canvas/ideas/" + `${selectedIdea.id}/update_position`
     console.log(url)
 
     $.ajax({

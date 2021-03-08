@@ -1,10 +1,13 @@
 class IdeasController < ApplicationController
   before_action :set_canvas_and_diagram
+  skip_before_action :verify_authenticity_token
 
   def index
     @ideas = Idea.where(canvas_id: @canvas)
     render json: @ideas
   end
+
+
 
   def create
     @idea = @canvas.ideas.build(idea_params)
@@ -17,7 +20,21 @@ class IdeasController < ApplicationController
     end
   end
 
+  def edit
+    @idea = Idea.find_by_id(params[:id])
+    respond_to do |format|
+      format.js
+      format.html
+    end
+  end
+
   def update
+    @idea = Idea.find_by_id(params[:id])
+    @idea.update(idea_params)
+    redirect_to(edit_diagram_canvas_path(@diagram))
+  end
+
+  def update_position
     idea = Idea.find_by_id(params[:id])
     idea.x_pos = params[:idea][:x_pos]
     idea.y_pos = params[:idea][:y_pos]
