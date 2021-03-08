@@ -16,7 +16,7 @@ var elemLeft = canvas.offsetLeft + canvas.clientLeft;
 var elemTop = canvas.offsetTop + canvas.clientTop;
 
 let ideas = {}
-let bubbles = {}
+let bubbles = []
 
 
 let overIdeaIndex = undefined;
