@@ -22,6 +22,10 @@ class CanvasController < ApplicationController
     end
   end
 
+  def show
+    @canvas = @diagram.canvas
+  end
+
   def edit
     @canvas = @diagram.canvas
   end
