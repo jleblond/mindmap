@@ -1,3 +1,7 @@
+<%= link_to "Show Canvas", diagram_canvas_path(@canvas.diagram) %>
+
+
+
 <% canvas_background_url =  @canvas.has_background? ? url_for(@canvas.background) : nil %>
 <%= content_tag :canvas, '', id: 'myCanvas',
                 data: {
