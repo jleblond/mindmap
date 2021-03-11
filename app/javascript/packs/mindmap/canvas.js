@@ -10,6 +10,7 @@ export class Canvas{
         this.ctx = ctx;
         this.canvas.width = 800;
         this.canvas.height = 800;
+        this.data = []
 
         this.background = new Image();
         this.background.src = this.canvas.getAttribute('data-background-src')

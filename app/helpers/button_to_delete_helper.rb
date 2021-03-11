@@ -1,0 +1,13 @@
+module LinkToDeleteHelper
+
+  def link_to_delete(title, url, options = {})
+    html_options = {
+      class: "link_to_delete",
+      method: "delete"
+    }.merge(options.delete(:html_options) || {})
+
+    form_for :delete, url: url, html: html_options do |f|
+      f.submit title, options
+    end
+  end
+end

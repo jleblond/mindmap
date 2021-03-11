@@ -9,9 +9,6 @@ export class CanvasDraw extends Canvas {
         super(canvas, ctx);
         this.isDrawing = false;
         this.selectedBubbleID = undefined;
-        this.data = {}
-        this.overBubbleID = undefined
-
         this.loadData(ctx);
     }
 
@@ -40,7 +37,6 @@ export class CanvasDraw extends Canvas {
     updateSelectedIdea(x, y){
         let url = `/diagrams/${this.canvas.getAttribute('data-diagram-id')}/canvas/ideas/${this.selectedBubbleID}/update_position`
         let data = { idea: { x_pos: x, y_pos: y } }
-
         putRequest(url, data)
     }
 

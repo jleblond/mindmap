@@ -3,6 +3,7 @@
 <% canvas_background_url =  @canvas.has_background? ? url_for(@canvas.background) : nil %>
 <%= content_tag :canvas, '', id: 'myCanvas',
                 data: {
+                  canvas_action: 'SHOW',
                   background_src: canvas_background_url,
                   idea_url: diagram_canvas_ideas_path(@canvas.diagram),
                   diagram_id: @canvas.diagram.id,
@@ -10,4 +11,4 @@
 
 
 
-<%= javascript_pack_tag 'mindmap/canvasShow', 'data-turbolinks-track': 'reload' %>
+<%= javascript_pack_tag 'mindmap', 'data-turbolinks-track': 'reload' %>

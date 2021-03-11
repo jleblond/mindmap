@@ -3,10 +3,22 @@ import {CanvasDraw} from "./mindmap/canvasDraw";
 
 
 
+
 $(document).ready(function(){
     const canvas = document.getElementById(`myCanvas`);
     const ctx = canvas.getContext("2d");
-    const canvasObj = new CanvasDraw(canvas, ctx);
+    let canvasObj;
+
+    const canvasAction = canvas.getAttribute('data-canvas-action')
+    switch(canvasAction){
+        case 'DRAW':
+            canvasObj = new CanvasDraw(canvas, ctx)
+            break;
+        default:
+            canvasObj = new CanvasShow(canvas, ctx)
+            break;
+    }
+
 
     canvas.addEventListener('mousedown', function(event) {
         canvasObj.mouseDownEvent(event)
