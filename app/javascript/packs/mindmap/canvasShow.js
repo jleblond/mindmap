@@ -9,22 +9,6 @@ export class CanvasShow extends Canvas {
         this.loadData(ctx);
     }
 
-    // handleEvent(e) {
-    //     console.log(e)
-    //     switch(e.type) {
-    //         case "mousedown":
-    //             this.mouseDownEvent(e);
-    //             break;
-    //         case "mousemove":
-    //             this.mouseMoveEvent(e);
-    //             break;
-    //         case "mouseup":
-    //             this.mouseUpEvent(e);
-    //             break;
-    //     }
-    // }
-
-
     mouseDownEvent = (event) => {
         let x = event.pageX - this.elemLeft,
             y = event.pageY - this.elemTop;

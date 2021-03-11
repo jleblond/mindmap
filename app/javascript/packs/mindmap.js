@@ -1,4 +1,3 @@
-import {CanvasEdit} from "./mindmap/canvasEdit";
 import {CanvasShow} from "./mindmap/canvasShow";
 import {CanvasDraw} from "./mindmap/canvasDraw";
 

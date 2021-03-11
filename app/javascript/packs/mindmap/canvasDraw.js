@@ -1,5 +1,5 @@
 import {Canvas} from "./canvas";
-import {postRequest, putRequest} from "./api";
+import {getRequest, postRequest, putRequest} from "./api";
 import {BubbleIdea} from "./idea";
 
 
@@ -42,35 +42,20 @@ export class CanvasDraw extends Canvas {
         putRequest(url, data)
     }
 
-    // handleEvent(e) {
-    //     console.log(e)
-    //     switch(e.type) {
-    //         case "mousedown":
-    //             this.mouseDownEvent(e);
-    //             break;
-    //         case "mousemove":
-    //             this.mouseMoveEvent(e);
-    //             break;
-    //         case "mouseup":
-    //             this.mouseUpEvent(e);
-    //             break;
-    //     }
-    // }
-
-
     mouseDownEvent = (event) => {
         let x = event.pageX - this.elemLeft,
             y = event.pageY - this.elemTop;
-
-        console.log(this.bubbles)
 
         for(let index=0;index<this.bubbles.length;index++){
             const element = this.bubbles[index]
             if (y > element.top && y < element.top + element.height
                 && x > element.left && x < element.left + element.width) {
-                console.log('in element!')
                 this.selectedBubbleID = element.id
                 this.isDrawing = true;
+
+                let url = `/diagrams/${this.canvas.getAttribute('data-diagram-id')}/canvas/ideas/${this.selectedBubbleID}/edit?format=js`
+                getRequest(url)
+
                 return;
             }
         }
@@ -85,8 +70,7 @@ export class CanvasDraw extends Canvas {
                 y = event.pageY - this.elemTop;
 
             const ctx = this.ctx
-            ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
-            ctx.drawImage(this.background, 0, 0);
+            this.redrawBackground(ctx)
 
             let copy = new Object()
 
@@ -100,7 +84,6 @@ export class CanvasDraw extends Canvas {
 
             this.bubbles.push(new BubbleIdea(this.selectedBubbleID, x, y, copy.diameter, copy.name))
             this.bubbles.forEach(function(bubble) {
-                console.log( bubble)
                 bubble.draw(ctx)
             });
         }
@@ -109,13 +92,10 @@ export class CanvasDraw extends Canvas {
     mouseUpEvent = (event) => {
         this.canvas.style.cursor = 'auto';
         if( this.isDrawing) {
-
             let x = event.pageX - this.elemLeft,
                 y = event.pageY - this.elemTop;
 
-
             this.updateSelectedIdea( x, y)
-
 
             this.isDrawing = false;
             this.selectedBubbleID = undefined;
