@@ -33,21 +33,26 @@ export class Canvas{
 
                 for (let i = 0; i < data.length; i++) {
                     let bubble = data[i];
+                    let id = bubble['id'];
                     let x = bubble['x_pos'];
                     let y = bubble['y_pos'];
 
                     let diameter = bubble['diameter'];
                     let label = bubble['label'];
 
-                    this.bubbles.push(new BubbleIdea(x, y, diameter, label));
+                    this.bubbles.push(new BubbleIdea(id, x, y, diameter, label));
                 }
                 this.drawAll(ctx);
             })
     }
 
-    drawAll = (ctx) => {
+    redrawBackground = (ctx) => {
         ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
         ctx.drawImage(this.background, 0, 0);
+    }
+
+    drawAll = (ctx) => {
+        this.redrawBackground(ctx)
         this.bubbles.forEach(function(bubble) {
             bubble.draw(ctx)
         });

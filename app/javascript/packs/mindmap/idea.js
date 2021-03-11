@@ -1,5 +1,6 @@
 export class BubbleIdea{
-    constructor(x, y, diameter, name) {
+    constructor(id, x, y, diameter, name) {
+        this.id = id
         this.x = x;
         this.y = y;
         this.diameter = diameter;
@@ -17,6 +18,11 @@ export class BubbleIdea{
         this.y = y;
     }
 
+    redraw(ctx){
+        this.erase(ctx)
+        this.draw(ctx)
+    }
+
     erase(ctx){
         ctx.clearRect(this.left, this.top, this.width, this.height);
     }
@@ -29,7 +35,7 @@ export class BubbleIdea{
         // doc: ellipse(x, y, radiusX, radiusY, rotation, startAngle, endAngle, anticlockwise)
         // ctx.ellipse(this.x, this.y, this.radius, this.radius, 0, 0, Math.PI*2);
 
-
+        this.erase(ctx)
         ctx.fillStyle = '#05EFFF';
         ctx.fillRect(this.left, this.top, this.radius, this.radius);
         ctx.fillStyle = '#0a0000';
