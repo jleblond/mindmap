@@ -1,51 +1,74 @@
-import {canvas, bubbles, ideas, elemLeft, elemTop} from "./canvas";
+import {Canvas} from "./canvas";
 
 
-let overIdeaIndex = undefined;
+export class CanvasShow extends Canvas {
+    constructor(canvas, ctx){
+        super(canvas, ctx);
+        this.overIdeaIndex = undefined;
 
-canvas.addEventListener('mousedown', function(event) {
-    var x = event.pageX - elemLeft,
-        y = event.pageY - elemTop;
-
-    // Collision detection between clicked offset and element.
-    bubbles.forEach(function(element, index) {
-        if (y > element.top && y < element.top + element.height
-            && x > element.left && x < element.left + element.width) {
-            console.log('in element!')
-            overIdeaIndex = index
-
-            let idea = ideas[index]
-            if(idea.url){
-                let redirectWindow = window.open(`${idea.url}`, '_blank');
-                redirectWindow.location;
-            }
-            return;
-        }
-    });
-
-}, false);
-
-canvas.addEventListener('mousemove', function(event) {
-    var x = event.pageX - elemLeft,
-        y = event.pageY - elemTop;
-
-    let isOverElement = false;
-
-    // Collision detection between clicked offset and element.
-    bubbles.forEach(function(element, index) {
-        if (y > element.top && y < element.top + element.height
-            && x > element.left && x < element.left + element.width) {
-            overIdeaIndex = index
-            return;
-        }
-    });
-
-    let idea = ideas[overIdeaIndex]
-    if(idea?.url){
-        console.log("hey")
-        canvas.style.cursor = "pointer";
-    } else {
-        canvas.style.cursor = "default";
+        this.loadData(ctx);
     }
 
-}, false);
+    // handleEvent(e) {
+    //     console.log(e)
+    //     switch(e.type) {
+    //         case "mousedown":
+    //             this.mouseDownEvent(e);
+    //             break;
+    //         case "mousemove":
+    //             this.mouseMoveEvent(e);
+    //             break;
+    //         case "mouseup":
+    //             this.mouseUpEvent(e);
+    //             break;
+    //     }
+    // }
+
+
+    mouseDownEvent = (event) => {
+        let x = event.pageX - this.elemLeft,
+            y = event.pageY - this.elemTop;
+
+        // Collision detection between clicked offset and element.
+        for(let index=0;index<this.bubbles.length;index++){
+            const element = this.bubbles[index]
+            if (y > element.top && y < element.top + element.height
+                && x > element.left && x < element.left + element.width) {
+                console.log('in element!')
+                this.overIdeaIndex = index
+
+                let idea = this.data[index]
+                if(idea.url){
+                    let redirectWindow = window.open(`${idea.url}`, '_blank');
+                    redirectWindow.location;
+                }
+                return;
+            }
+        }
+    }
+
+    mouseMoveEvent = (event) => {
+        let x = event.pageX - this.elemLeft,
+            y = event.pageY - this.elemTop;
+
+        for(let index=0;index<this.bubbles.length;index++){
+            const element = this.bubbles[index]
+            if (y > element.top && y < element.top + element.height
+                && x > element.left && x < element.left + element.width) {
+                this.overIdeaIndex = index
+                return;
+            }
+        }
+
+        let idea = this.data[this.overIdeaIndex]
+        if(idea?.url){
+            console.log("hey")
+            this.canvas.style.cursor = "pointer";
+        } else {
+            this.canvas.style.cursor = "default";
+        }
+    }
+
+}
+
+
