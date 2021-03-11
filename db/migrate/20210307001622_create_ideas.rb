@@ -2,6 +2,7 @@ class CreateIdeas < ActiveRecord::Migration[6.1]
   def change
     create_table :ideas do |t|
       t.string :label
+      t.string :color
       t.text :description
       t.integer :canvas_id
       t.string :url

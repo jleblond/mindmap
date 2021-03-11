@@ -56,6 +56,7 @@ ActiveRecord::Schema.define(version: 2021_03_07_001622) do
 
   create_table "ideas", force: :cascade do |t|
     t.string "label"
+    t.string "color"
     t.text "description"
     t.integer "canvas_id"
     t.string "url"
