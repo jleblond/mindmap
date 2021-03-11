@@ -41,6 +41,12 @@ class IdeasController < ApplicationController
     idea.save
   end
 
+  def destroy
+    @idea = Idea.find_by_id(params[:id])
+    @idea.destroy!
+    redirect_to(edit_diagram_canvas_path(@diagram))
+  end
+
   private
 
   def idea_params

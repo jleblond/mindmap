@@ -1,8 +1,8 @@
-module LinkToDeleteHelper
+module ButtonToDeleteHelper
 
-  def link_to_delete(title, url, options = {})
+  def button_to_delete(title, url, options = {})
     html_options = {
-      class: "link_to_delete",
+      class: "button_to_delete",
       method: "delete"
     }.merge(options.delete(:html_options) || {})
 
