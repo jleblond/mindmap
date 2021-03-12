@@ -3,6 +3,8 @@ class CanvasController < ApplicationController
   before_action :require_edit_permission, only: [:edit, :update, :destroy]
   before_action :set_diagram
 
+  layout "workspace"
+
   def index
     @canvases = Canvas.all
   end

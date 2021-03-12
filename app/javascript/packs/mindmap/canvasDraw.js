@@ -16,8 +16,8 @@ export class CanvasDraw extends Canvas {
         let label = 'New label'
 
         // TODO: promises or callbacks
-        this.bubbles.push(new BubbleIdea(x, y, DIAMETER, label, DEFAULT_COLOR))
-        this.drawAll(this.ctx)
+        // this.bubbles.push(new BubbleIdea(0, x, y, DIAMETER, label, DEFAULT_COLOR))
+        // this.drawAll(this.ctx)
 
         let url = this.canvas.getAttribute('data-idea-url')
         let data = { idea:

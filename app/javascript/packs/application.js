@@ -8,7 +8,7 @@
 import "p5";
 
 import 'bootstrap';
-import '../../assets/stylesheets/application.css'
+import "../../assets/stylesheets/application.css"
 import 'popper.js/dist/esm/popper'
 
 

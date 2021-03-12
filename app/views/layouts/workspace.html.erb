@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Mindmap</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
+
+  <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+
+  <script type="text/javascript">
+      document.onmousemove=function(e) {
+          let x = e.clientX
+          let y = e.clientY
+          console.log('x et y: ', `${x} et ${y}`)
+      };
+  </script>
+</head>
+<body>
+
+  <%= render partial: "layouts/nav" %>
+  <div style="margin-left:auto; margin-right:auto;">
+    <%= yield %>
+  </div>
+
+
+</body>
+</html>

@@ -2,12 +2,12 @@ class IdeasController < ApplicationController
   before_action :set_canvas_and_diagram
   skip_before_action :verify_authenticity_token
 
+  layout "workspace"
+
   def index
     @ideas = Idea.where(canvas_id: @canvas)
     render json: @ideas
   end
-
-
 
   def create
     @idea = @canvas.ideas.build(idea_params)

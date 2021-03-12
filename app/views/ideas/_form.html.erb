@@ -22,9 +22,6 @@ MON FORM
     <%= f.text_field :url, class:"form-control" %>
   </div>
   <%= f.submit "Save", class: "btn btn-primary" %>
-
-  <%= button_to_delete 'DELETE', diagram_canvas_idea_path(idea.canvas.diagram, idea), {data: {confirm: 'Are you sure?'}} %>
-
 <% end %>
 
-
+<%= button_to_delete 'Delete', diagram_canvas_idea_path(idea.canvas.diagram, idea), {data: {confirm: 'Are you sure?'}, class: 'btn btn-danger'} %>

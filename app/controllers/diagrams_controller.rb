@@ -2,6 +2,8 @@ class DiagramsController < ApplicationController
   before_action :authenticate_user!
   before_action :require_edit_permission, only: [:edit, :update]
 
+  layout "workspace"
+
   def index
     @diagrams = Diagram.all
   end

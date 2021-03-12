@@ -1,8 +1,28 @@
 My diagrams
 
+<table class="table table-hover">
+  <thead>
+  <tr>
+    <th scope="col">#</th>
+    <th scope="col">First</th>
+    <th scope="col">Last</th>
+    <th scope="col">Handle</th>
+  </tr>
+  </thead>
+  <tbody>
+    <% @diagrams.each do |diagram| %>
+      <tr>
+        <th scope="row"><%= diagram.id %></th>
+        <td><%= diagram.name %></td>
+        <td><%= diagram.description %></td>
+        <td><%= link_to 'Diagram Info', edit_diagram_path(diagram) %></td>
+        <td><%= (link_to 'Start', new_diagram_canvas_path(diagram)) if !diagram.canvas %></td>
+        <td><%= (link_to 'Draw', edit_diagram_canvas_path(diagram, diagram.canvas)) if diagram.canvas %></td>
+        <td><%= (link_to 'View', diagram_canvas_path(diagram, diagram.canvas)) if diagram.canvas %></td>
 
+      </tr>
+    <% end %>
 
+  </tbody>
+</table>
 
-<% @diagrams.each do |diagram| %>
-  <%= diagram.id %>
-<% end %>
