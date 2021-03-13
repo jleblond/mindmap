@@ -1,6 +1,7 @@
 <% canvas_background_url =  @canvas.has_background? ? url_for(@canvas.background) : nil %>
-<div class="" style="display: flex;">
-  <div class="" style="flex: 2;">
+<h4 style="text-align: center; margin-top: 3%;">Diagram <%= @canvas.diagram.name %></h4>
+<div class="" style="margin-top: 2%;">
+  <div class="" style="float: left;">
     <%= content_tag :canvas, '', id: 'myCanvas',
                     data: {
                       canvas_action: 'DRAW',
@@ -9,18 +10,22 @@
                       diagram_id: @canvas.diagram.id,
                     } %>
   </div>
-  <div class="" style="flex: 1; padding-left: 10px;">
-    <div class="card text-right" >
+  <div class="" style="display: inline-block; margin-left: 3%;">
+    <div class="card" >
+      <h5 class="card-header">Canvas</h5>
       <div class="card-body">
-        <h5 class="card-title">Special title treatment</h5>
         <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
         <%= render partial: 'partials/canvas/actions_buttons', locals: {diagram: @canvas.diagram}%>
       </div>
     </div>
-    <%= content_tag :div, '', id: 'editIdea',
-                    data: {
-                      diagram_id: @canvas.diagram.id,
-                    } %>
+    <div style="margin-top: 3%;">
+          <%= content_tag :div, '', id: 'editIdea',
+                          data: {
+                            diagram_id: @canvas.diagram.id,
+                          } %>
+        </p>
+    </div>
+
   </div>
 </div>
 

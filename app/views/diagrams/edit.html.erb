@@ -1,6 +1,50 @@
-<h2> Edit Diagram </h2>
-<%= @diagram.id %>
-<%= @diagram.name %>
-<%= @diagram.description %>
+<div class="" style="display: flex;">
+  <div class="" style="flex: 2;">
+    <div class="card" >
+      <div class="card-body">
+        <h2 class="card-title">Edit Diagram</h2>
+        <p class="card-text">
+        <%= form_for(@diagram, :url => { :action => "update" })  do |f| %>
+          <div class="form-group">
+            <%= f.label :name, "Diagram Name (*)" %>
+            <%= f.text_field :name, class:"form-control" %>
+          </div>
+          <div class="form-group">
+            <%= f.label :description %>
+            <%= f.text_area :description, class:"form-control", cols: "30", rows: "7" %>
+          </div>
+          <%= f.submit "Save", class: "btn btn-primary" %>
+        <% end %>
+      </div>
+    </div>
 
-<%= render partial: 'partials/canvas/actions_buttons', locals: {diagram: @diagram} %>
+  </div>
+
+  <div class="" style="flex: 1; padding-left: 10px;">
+    <div class="card" >
+      <div class="card-body">
+        <h2 class="card-title">Canvas</h2>
+        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+        <%= render partial: 'partials/canvas/actions_buttons', locals: {diagram: @diagram} %>
+      </div>
+    </div>
+
+    <div></div>
+
+    <div class="card" >
+      <div class="card-body">
+        <h2 class="card-title">Delete Diagram</h2>
+        <p class="card-text"></p>
+        <%= link_to diagram_path(@diagram), method: :delete,
+                    data: { confirm: "Are you sure you want to delete this diagram?"},
+                    class: "btn btn-xs btn-danger" do %>
+          <i class="fas fa-trash-alt"></i> Delete Diagram
+        <% end %>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+

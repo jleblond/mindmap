@@ -1,9 +1,9 @@
 class CanvasController < ApplicationController
-  before_action :authenticate_user!
+  before_action :authenticate_user!, except: [:show]
   before_action :require_edit_permission, only: [:edit, :update, :destroy]
   before_action :set_diagram
 
-  layout "canvas" # except for '#show' which uses layout false
+  layout "canvas" # except for '#show' and "#new"
 
   def index
     @canvases = Canvas.all
@@ -11,6 +11,9 @@ class CanvasController < ApplicationController
 
   def new
     @canvas = @diagram.build_canvas
+    respond_to do |format|
+      format.html { render layout: 'application' }
+    end
   end
 
   def create
