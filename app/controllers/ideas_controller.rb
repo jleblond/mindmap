@@ -2,7 +2,7 @@ class IdeasController < ApplicationController
   before_action :set_canvas_and_diagram
   skip_before_action :verify_authenticity_token
 
-  layout "workspace"
+  layout "canvas"
 
   def index
     @ideas = Idea.where(canvas_id: @canvas)

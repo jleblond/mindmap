@@ -19,4 +19,5 @@ require("../channels")
 require('jquery')
 require('jquery-ujs')
 
+import "@fortawesome/fontawesome-free/css/all"
 

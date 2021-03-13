@@ -24,4 +24,6 @@ MON FORM
   <%= f.submit "Save", class: "btn btn-primary" %>
 <% end %>
 
-<%= button_to_delete 'Delete', diagram_canvas_idea_path(idea.canvas.diagram, idea), {data: {confirm: 'Are you sure?'}, class: 'btn btn-danger'} %>
+<%= link_to diagram_canvas_idea_path(idea.canvas.diagram, idea), method: :delete, data: { confirm: "Are you sure you want to delete this canvas?"}, class: "btn btn-xs btn-danger" do %>
+  <i class="fas fa-trash-alt"></i> Delete
+<% end %>

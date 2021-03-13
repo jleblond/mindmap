@@ -14,7 +14,7 @@
       <div class="card-body">
         <h5 class="card-title">Special title treatment</h5>
         <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-        <%= link_to "Show Canvas", diagram_canvas_path(@canvas.diagram) %>
+        <%= render partial: 'partials/canvas/actions_buttons', locals: {diagram: @canvas.diagram}%>
       </div>
     </div>
     <%= content_tag :div, '', id: 'editIdea',

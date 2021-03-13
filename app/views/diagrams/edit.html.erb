@@ -1,16 +1,6 @@
-<%#= @diagram.id %>
+<h2> Edit Diagram </h2>
+<%= @diagram.id %>
+<%= @diagram.name %>
+<%= @diagram.description %>
 
-<h2> Diagram Info </h2>
-<% @diagram.id %>
-<% @diagram.name %>
-<% @diagram.description %>
-
-
-<% if @diagram.canvas %>
-  <a href="<%= edit_diagram_canvas_path(@diagram) %>"> Edit Canvas </a>
-
-  <%= link_to "[X] Delete this canvas", diagram_canvas_path(@diagram), method: :delete,
-              data: { confirm: "Are you sure you want to delete this canvas?"}, class: "btn btn-xs btn-danger" %>
-<% else %>
-  <a href="<%= new_diagram_canvas_path(@diagram) %>"> + Canvas </a>
-<% end %>
+<%= render partial: 'partials/canvas/actions_buttons', locals: {diagram: @diagram} %>
