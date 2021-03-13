@@ -11,20 +11,22 @@
           <i class="fas fa-home"></i> Home <span class="sr-only">(current)</span>
         </a>
       </li>
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          <i class="fas fa-project-diagram"></i> Diagrams
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="<%= new_diagram_path %>">
-            <i class="fas fa-plus"></i> New Diagram
+      <% if current_user %>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="fas fa-project-diagram"></i> Diagrams
           </a>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href=" <%= diagrams_path %>">
-            <i class="fas fa-tasks"></i> Manage Diagrams
-          </a>
-        </div>
-      </li>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="<%= new_diagram_path %>">
+              <i class="fas fa-plus"></i> New Diagram
+            </a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href=" <%= diagrams_path %>">
+              <i class="fas fa-tasks"></i> Manage Diagrams
+            </a>
+          </div>
+        </li>
+      <% end %>
     </ul>
 
     <ul class="navbar-nav mr-2 my-2 my-lg-0">
