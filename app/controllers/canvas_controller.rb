@@ -3,7 +3,7 @@ class CanvasController < ApplicationController
   before_action :require_edit_permission, only: [:edit, :update, :destroy]
   before_action :set_diagram
 
-  layout "canvas"
+  layout "canvas" # except for '#show' which uses layout false
 
   def index
     @canvases = Canvas.all
@@ -26,6 +26,9 @@ class CanvasController < ApplicationController
 
   def show
     @canvas = @diagram.canvas
+    respond_to do |format|
+      format.html { render :layout => false }
+    end
   end
 
   def edit

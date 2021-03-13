@@ -1,7 +1,7 @@
 <% actions_list = canvas_actions_list(params) %>
 
 <% if actions_list.include?(:show) %>
-  <%= link_to diagram_canvas_path(diagram), class: "btn btn-xs btn-primary" do %>
+  <%= link_to diagram_canvas_path(diagram), class: "btn btn-xs btn-primary", target: "_blank" do %>
     <i class="fas fa-eye"></i> Preview
   <% end %>
 <% end %>
