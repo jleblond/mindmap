@@ -7,8 +7,8 @@
 
 import "p5";
 
-import 'bootstrap';
-import "../../assets/stylesheets/application.css"
+require("bootstrap")
+import "../../assets/stylesheets/application.scss"
 import 'popper.js/dist/esm/popper'
 
 
