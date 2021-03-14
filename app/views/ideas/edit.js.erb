@@ -1,4 +1,4 @@
-$('#editIdea').fadeOut("fasst", function(){
-    $('#editIdea').html("<%= escape_javascript(render partial: 'form', locals: {idea: @idea}) %>");
+$('#editIdea').fadeOut("fast", function(){
+    $('#editIdea').html("<%= escape_javascript(render partial: 'edit', locals: {idea: @idea}) %>");
     $('#editIdea').fadeIn("fast");
 })

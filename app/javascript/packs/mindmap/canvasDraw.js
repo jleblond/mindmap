@@ -1,7 +1,7 @@
 import {Canvas} from "./canvas";
 import {getRequest, postRequest, putRequest} from "./api";
 import {BubbleIdea} from "./idea";
-import {DIAMETER, DEFAULT_COLOR} from "./constants";
+import {DIAMETER, DEFAULT_COLOR, DEFAULT_IDEA_LABEL} from "./constants";
 
 
 export class CanvasDraw extends Canvas {
@@ -13,15 +13,12 @@ export class CanvasDraw extends Canvas {
     }
 
     createIdea(x, y){
-        let label = 'New label'
+        this.bubbles.push(new BubbleIdea(undefined, x, y, DIAMETER, DEFAULT_IDEA_LABEL, DEFAULT_COLOR))
+        this.drawAll(this.ctx)
 
-        // TODO: promises or callbacks
-        // this.bubbles.push(new BubbleIdea(0, x, y, DIAMETER, label, DEFAULT_COLOR))
-        // this.drawAll(this.ctx)
-
-        let url = this.canvas.getAttribute('data-idea-url')
+        let create_idea_url = this.canvas.getAttribute('data-idea-url') + '?format=json'
         let data = { idea:
-                { label: label,
+                { label: DEFAULT_IDEA_LABEL,
                     color: DEFAULT_COLOR,
                     description: "",
                     url: "",
@@ -30,8 +27,19 @@ export class CanvasDraw extends Canvas {
                     y_pos: y,
                     diameter: DIAMETER }
         }
-        postRequest(url, data)
-        this.loadData(this.ctx);
+        postRequest(create_idea_url, data)
+            .then((data) =>{
+                for(let index=0;index<this.bubbles.length;index++){
+                    const element = this.bubbles[index]
+                    if(element.id == undefined){
+                        element.id = data.id
+                        return element.id
+                    }
+            }})
+            .then((id) => {
+                let edit_idea_url = `/diagrams/${this.canvas.getAttribute('data-diagram-id')}/canvas/ideas/${id}/edit?format=js`
+                getRequest(edit_idea_url)
+            })
     }
 
     updateSelectedIdea(x, y){
@@ -86,7 +94,7 @@ export class CanvasDraw extends Canvas {
                 bubble.draw(ctx)
             });
         } else {
-            this.canvas.style.cursor = 'auto';
+            this.canvas.style.cursor = 'crosshair';
             for(let index=0;index<this.bubbles.length;index++){
                 const element = this.bubbles[index]
                 if (y > element.top && y < element.top + element.height

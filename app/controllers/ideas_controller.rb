@@ -9,14 +9,25 @@ class IdeasController < ApplicationController
     render json: @ideas
   end
 
+
   def create
     @idea = @canvas.ideas.build(idea_params)
     if @idea.save
-      flash[:notice] = "Idea created!"
-      redirect_to(edit_diagram_canvas_path(@diagram))
+      respond_to do |format|
+        format.json { render json: @idea }
+        format.html {
+          flash[:notice] = "Idea created!"
+          redirect_to(edit_diagram_canvas_path(@diagram))
+        }
+      end
     else
-      flash[:alert] = "Idea was not created"
-      redirect_to(edit_diagram_path(@diagram))
+      respond_to do |format|
+        format.json
+        format.html {
+          flash[:alert] = "Idea was not created"
+          redirect_to(edit_diagram_path(@diagram))
+        }
+      end
     end
   end
 
