@@ -3,6 +3,8 @@ class CanvasController < ApplicationController
   before_action :require_edit_permission, only: [:edit, :update, :destroy]
   before_action :set_diagram
 
+  before_action :allow_iframe_requests, only: [:show]
+
   layout "canvas" # except for '#show' and "#new"
 
   def index
@@ -52,5 +54,9 @@ class CanvasController < ApplicationController
 
   def canvas_params
     params.require(:canvas).permit(:diagram_id, :background)
+  end
+
+  def allow_iframe_requests
+    response.headers.delete('X-Frame-Options')
   end
 end
