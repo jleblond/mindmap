@@ -30,10 +30,6 @@ gem 'jbuilder', '~> 2.7'
 gem 'pg'
 
 gem 'devise'
-gem 'annotate'
-gem 'paper_trail'
-gem 'acts_as_paranoid'
-gem 'pry'
 gem 'jquery-rails'
 gem 'bootstrap'
 
@@ -55,6 +51,9 @@ group :development do
   gem 'listen', '~> 3.3'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
+
+  gem 'annotate'
+  gem 'pry'
 end
 
 group :test do
