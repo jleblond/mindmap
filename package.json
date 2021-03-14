@@ -12,7 +12,7 @@
     "jquery-ujs": "^1.2.2",
     "p5": "^1.2.0",
     "popper.js": "^1.16.1",
-    "yarn": "^1.22.10",
+    "yarn": "^1.22.10"
   },
   "version": "0.1.0",
   "devDependencies": {
