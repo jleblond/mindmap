@@ -2,7 +2,7 @@
 #
 # Table name: diagrams
 #
-#  id          :integer          not null, primary key
+#  id          :bigint           not null, primary key
 #  name        :string           not null
 #  description :text
 #  user_id     :integer          not null

@@ -61,7 +61,7 @@ class IdeasController < ApplicationController
   private
 
   def idea_params
-    params.require(:idea).permit(:label, :color, :description, :url, :shape_type, :x_pos, :y_pos, :diameter)
+    params.require(:idea).permit!
   end
 
   def set_canvas_and_diagram

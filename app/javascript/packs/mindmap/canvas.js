@@ -1,6 +1,5 @@
 import {getRequest} from '../mindmap/api'
 import {BubbleIdea} from '../mindmap/idea'
-import {DIAMETER} from "./constants";
 
 
 export class Canvas{
@@ -37,12 +36,14 @@ export class Canvas{
                     let id = bubble['id'];
                     let x = bubble['x_pos'];
                     let y = bubble['y_pos'];
+                    let width = bubble['width'];
+                    let height = bubble['height'];
 
-                    // let diameter = bubble['diameter'];
                     let label = bubble['label'];
-                    let color = bubble['color']
+                    let background_color = bubble['background_color'];
+                    let text_color = bubble['text_color'];
 
-                    this.bubbles.push(new BubbleIdea(id, x, y, DIAMETER, label, color));
+                    this.bubbles.push(new BubbleIdea(id, x, y, width, height, label, background_color, text_color));
                 }
                 this.drawAll(ctx);
             })

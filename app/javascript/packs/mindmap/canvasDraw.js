@@ -1,7 +1,7 @@
 import {Canvas} from "./canvas";
 import {getRequest, postRequest, putRequest} from "./api";
 import {BubbleIdea} from "./idea";
-import {DIAMETER, DEFAULT_COLOR, DEFAULT_IDEA_LABEL} from "./constants";
+import {DEFAULT_WIDTH, DEFAULT_HEIGHT, DEFAULT_BACKGROUND_COLOR, DEFAULT_TEXT_COLOR, DEFAULT_IDEA_LABEL} from "./constants";
 
 
 export class CanvasDraw extends Canvas {
@@ -13,20 +13,26 @@ export class CanvasDraw extends Canvas {
     }
 
     createIdea(x, y){
-        this.bubbles.push(new BubbleIdea(undefined, x, y, DIAMETER, DEFAULT_IDEA_LABEL, DEFAULT_COLOR))
+        this.bubbles.push(new BubbleIdea(undefined, x, y,
+            DEFAULT_WIDTH, DEFAULT_HEIGHT,
+            DEFAULT_IDEA_LABEL,
+            DEFAULT_BACKGROUND_COLOR, DEFAULT_TEXT_COLOR))
         this.drawAll(this.ctx)
 
         let create_idea_url = this.canvas.getAttribute('data-idea-url') + '?format=json'
         let data = { idea:
                 { label: DEFAULT_IDEA_LABEL,
-                    color: DEFAULT_COLOR,
+                    background_color: DEFAULT_BACKGROUND_COLOR,
+                    text_color: DEFAULT_TEXT_COLOR,
                     description: "",
                     url: "",
-                    shape_type: 'CIRCLE',
+                    shape_type: 'DEFAULT',
                     x_pos: x,
                     y_pos: y,
-                    diameter: DIAMETER }
+                    width: DEFAULT_WIDTH,
+                    height: DEFAULT_HEIGHT}
         }
+
         postRequest(create_idea_url, data)
             .then((data) =>{
                 for(let index=0;index<this.bubbles.length;index++){
@@ -89,7 +95,9 @@ export class CanvasDraw extends Canvas {
                 this.bubbles = this.bubbles
             }
 
-            this.bubbles.push(new BubbleIdea(this.selectedBubbleID, x, y, DIAMETER, copy.name, copy.color))
+            this.bubbles.push(new BubbleIdea(this.selectedBubbleID, x, y,
+                copy.width, copy.height, copy.name,
+                copy.background_color, copy.text_color))
             this.bubbles.forEach(function(bubble) {
                 bubble.draw(ctx)
             });

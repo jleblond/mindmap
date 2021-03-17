@@ -1,17 +1,16 @@
 export class BubbleIdea{
-    constructor(id, x, y, diameter, name, color) {
+    constructor(id, x, y, width, height, name, background_color, text_color) {
         this.id = id
         this.x = x;
         this.y = y;
-        this.diameter = diameter;
-        this.radius = diameter / 2;
+        this.width = width;
+        this.height = height;
         this.name = name;
-        this.color = color;
+        this.background_color = background_color;
+        this.text_color = text_color;
 
-        this.left = (x - this.radius/2);
-        this.top = (y - this.radius/2);
-        this.width = this.radius;
-        this.height = this.radius;
+        this.left = (x - this.width/4);
+        this.top = (y - this.height/4);
     }
 
     updatePosition(x, y){
@@ -25,7 +24,7 @@ export class BubbleIdea{
     }
 
     erase(ctx){
-        ctx.clearRect(this.left, this.top, this.width, this.height);
+        ctx.clearRect(this.left, this.top, this.width/2, this.height/2);
     }
 
 
@@ -37,9 +36,12 @@ export class BubbleIdea{
         // ctx.ellipse(this.x, this.y, this.radius, this.radius, 0, 0, Math.PI*2);
 
         this.erase(ctx)
-        ctx.fillStyle = this.color;
-        ctx.fillRect(this.left, this.top, this.radius, this.radius);
-        ctx.fillStyle = '#0a0000';
-        ctx.fillText(this.name, this.left, this.top+10);
+        ctx.fillStyle = this.background_color;
+        ctx.fillRect(this.left, this.top, this.width/2, this.height/2);
+
+
+        ctx.font = "16px Georgia";
+        ctx.fillStyle = this.text_color;
+        ctx.fillText(this.name, this.left + this.width/8, this.top + this.height/4);
     }
 }
