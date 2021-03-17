@@ -2,8 +2,9 @@
 
 <%= form_for(@canvas, :url => { :action => "create" })  do |f| %>
     <div class="form-group">
-      <%= f.label :background, "Background image" %>
-      <%= f.file_field :background %>
+      <%= f.label :image_url, "Background image URL" %>
+      <%#= f.file_field :background %>
+      <%= f.text_field :image_url %>
     </div>
   <%= f.submit "Save", class: "btn btn-primary" %>
 <% end %>

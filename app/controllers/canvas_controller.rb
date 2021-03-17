@@ -53,7 +53,7 @@ class CanvasController < ApplicationController
   end
 
   def canvas_params
-    params.require(:canvas).permit(:diagram_id, :background)
+    params.require(:canvas).permit(:diagram_id, :image_url)
   end
 
   def allow_iframe_requests

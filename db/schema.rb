@@ -45,6 +45,7 @@ ActiveRecord::Schema.define(version: 2021_03_07_001622) do
 
   create_table "canvas", force: :cascade do |t|
     t.integer "diagram_id"
+    t.string "image_url"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

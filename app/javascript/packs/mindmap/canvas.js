@@ -14,6 +14,10 @@ export class Canvas{
         this.background = new Image();
         this.background.src = this.canvas.getAttribute('data-background-src')
 
+        this.background.onerror = () => {
+            alert('ERROR: Could not load image at: ' + this.background.src);
+        }
+
         this.background.onload = () => {
             this.ctx.drawImage(this.background, 0, 0)
             this.drawAll(this.ctx);
