@@ -17,7 +17,7 @@ class IdeasController < ApplicationController
         format.json { render json: @idea }
         format.html {
           flash[:notice] = "Idea created!"
-          redirect_to(edit_diagram_canvas_path(@diagram))
+          redirect_to(draw_diagram_canvas_path(@diagram))
         }
       end
     else
@@ -42,7 +42,7 @@ class IdeasController < ApplicationController
   def update
     @idea = Idea.find_by_id(params[:id])
     @idea.update(idea_params)
-    redirect_to(edit_diagram_canvas_path(@diagram))
+    redirect_to(draw_diagram_canvas_path(@diagram))
   end
 
   def update_position
@@ -55,7 +55,7 @@ class IdeasController < ApplicationController
   def destroy
     @idea = Idea.find_by_id(params[:id])
     @idea.destroy!
-    redirect_to(edit_diagram_canvas_path(@diagram))
+    redirect_to(draw_diagram_canvas_path(@diagram))
   end
 
   private

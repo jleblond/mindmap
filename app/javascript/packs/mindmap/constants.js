@@ -1,4 +1,4 @@
-export const DEFAULT_WIDTH = 400;
+export const DEFAULT_WIDTH = 300;
 export const DEFAULT_HEIGHT = 100;
 
 export const DEFAULT_BACKGROUND_COLOR = '#fffacd';

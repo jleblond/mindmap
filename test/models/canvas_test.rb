@@ -4,6 +4,7 @@
 #
 #  id         :bigint           not null, primary key
 #  diagram_id :integer
+#  image_url  :string
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #

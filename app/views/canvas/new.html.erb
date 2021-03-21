@@ -1,9 +1,1 @@
-<h2>Canvas</h2>
-
-<%= form_for(@canvas, :url => { :action => "create" })  do |f| %>
-    <div class="form-group">
-      <%= f.label :background, "Background image" %>
-      <%= f.file_field :background %>
-    </div>
-  <%= f.submit "Save", class: "btn btn-primary" %>
-<% end %>
+<%= render partial: 'form', locals: {action: 'create'} %>

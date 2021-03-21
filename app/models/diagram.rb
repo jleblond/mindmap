@@ -14,7 +14,7 @@ class Diagram < ApplicationRecord
   # acts_as_paranoid
 
   belongs_to :user, class_name: 'User', foreign_key: 'user_id'
-  has_one :canvas
+  has_one :canvas, dependent: :destroy
 
   validates :name, presence: true, length: {maximum: 50}
   validates :user_id, presence: true

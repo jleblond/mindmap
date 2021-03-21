@@ -8,6 +8,12 @@
 
 <% if actions_list.include?(:edit) %>
   <%= link_to edit_diagram_canvas_path(diagram), class: "btn btn-xs btn-outline-primary" do %>
+    <i class="fas fa-pen-square"></i> Edit Background
+  <% end %>
+<% end %>
+
+<% if actions_list.include?(:draw) %>
+  <%= link_to draw_diagram_canvas_path(diagram), class: "btn btn-xs btn-outline-success" do %>
     <i class="fas fa-pencil-ruler"></i> Draw
   <% end %>
 <% end %>

@@ -25,6 +25,7 @@ Rails.application.routes.draw do
   root to: "home#index"
   resources :diagrams do
     resource :canvas do
+      get :draw
       resources :ideas do
         member do
           put :update_position
