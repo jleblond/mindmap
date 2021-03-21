@@ -14,14 +14,20 @@
 # Configure Using Gemfile
 # gem 'pg'
 #
-development:
+
+
+
+default: &default
   adapter: postgresql
-  encoding: unicode
-  database: mindmap_dev
   pool: 5
+  timeout: 5000
+  encoding: unicode
+
+development:
+  <<: *default
+  database: mindmap_dev
   username: admin
   password:
-  timeout: 5000
 
   # Connect on a TCP socket. Omitted by default since the client uses a
   # domain socket that doesn't need configuration. Windows does not have
@@ -45,21 +51,16 @@ development:
 # re-generated from your development database when you run "rake".
 # Do not set this db to the same as development or production.
 test:
-  adapter: postgresql
-  encoding: unicode
+  <<: *default
   database: mindmap_test
-  pool: 5
   username: admin
   password:
-  timeout: 5000
 
 
 
 production:
-  adapter: postgresql
-  encoding: unicode
-  database: <%= ENV['RDS_DB_NAME'] %>
+  <<: *default
+  database: mindmap
+  host: localhost
   username: <%= ENV['RDS_USERNAME'] %>
   password: <%= ENV['RDS_PASSWORD'] %>
-  host: <%= ENV['RDS_HOSTNAME'] %>
-  port: <%= ENV['RDS_PORT'] %>
