@@ -10,7 +10,7 @@
 #
 class Canvas < ApplicationRecord
   belongs_to :diagram, class_name: 'Diagram', foreign_key: 'diagram_id'
-  has_many :ideas
+  has_many :ideas, dependent: :destroy
   # has_one_attached :background
 
   validates :diagram_id, presence: true

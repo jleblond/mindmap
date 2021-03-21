@@ -20,9 +20,13 @@
         <td><%= diagram.description %></td>
 
         <% if diagram.canvas %>
-          <td></td>
           <td>
             <%= link_to edit_diagram_canvas_path(diagram) do %>
+              <i class="fas fa-pen-square"></i> Edit Background
+            <% end %>
+          </td>
+          <td>
+            <%= link_to draw_diagram_canvas_path(diagram) do %>
               <i class="fas fa-pencil-ruler"></i> Draw
             <% end %>
           </td>

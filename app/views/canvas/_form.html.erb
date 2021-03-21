@@ -1,0 +1,42 @@
+<h2>Canvas</h2>
+
+<%= form_for(@canvas, :url => { :action => action })  do |f| %>
+  <div class="form-group">
+    <%= f.label :image_url, "Background image URL" %>
+    <%#= f.file_field :background %>
+    <%= f.text_field :image_url, size: '70' %>
+  </div>
+  <div id="focus-out-text" style="color: darkred;"></div>
+  <%= f.submit "Save", class: "btn btn-primary", id: 'btnSubmit' %>
+<% end %>
+
+<div id="preview-img" style="margin-top: 50px;">
+</div>
+
+<script type="text/javascript">
+    $(document).ready(() => {
+        verifyImageUrl();
+    })
+
+    const imgError = () => {
+        let url = $("#canvas_image_url").val();
+        $( "#focus-out-text" ).text( "Image URL " + url + " is undefined or not accessible" );
+        $("#btnSubmit").attr("disabled", true);
+    }
+
+    const imgLoad = () => {
+        $( "#focus-out-text" ).text("");
+        $("#btnSubmit").attr("disabled", false);
+    }
+
+    const verifyImageUrl = () => {
+        let url = $("#canvas_image_url").val();
+        document.getElementById("preview-img").innerHTML=
+            '<img src="'+url+'" onerror="imgError()" onload="imgLoad()" alt="" />';
+    }
+
+    $("#canvas_image_url").on('input', function() {
+        verifyImageUrl();
+    })
+
+</script>
