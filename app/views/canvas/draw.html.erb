@@ -1,4 +1,5 @@
 <% canvas_background_url =  @canvas.has_background? ? url_for(@canvas.background) : nil %>
+<% canvas_background_url =  image_url('default_background.jpg') %>
 <h4 style="text-align: center; margin-top: 3%;">Diagram <%= @canvas.diagram.name %></h4>
 <div class="" style="margin-top: 2%;">
   <div class="" style="float: left;">

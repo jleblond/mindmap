@@ -2,8 +2,8 @@ import {Canvas} from "./canvas";
 
 
 export class CanvasShow extends Canvas {
-    constructor(canvas, ctx){
-        super(canvas, ctx);
+    constructor(canvas, ctx, canvas_width, canvas_height){
+        super(canvas, ctx, canvas_width, canvas_height);
         this.overIdeaIndex = undefined;
         this.loadData(ctx);
     }

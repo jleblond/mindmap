@@ -5,8 +5,8 @@ import {DEFAULT_WIDTH, DEFAULT_HEIGHT, DEFAULT_BACKGROUND_COLOR, DEFAULT_TEXT_CO
 
 
 export class CanvasDraw extends Canvas {
-    constructor(canvas, ctx){
-        super(canvas, ctx);
+    constructor(canvas, ctx, canvas_width, canvas_height){
+        super(canvas, ctx, canvas_width, canvas_height);
         this.isDrawing = false;
         this.selectedBubbleID = undefined;
         this.loadData(ctx);

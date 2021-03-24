@@ -1,7 +1,7 @@
 import {CanvasShow} from "./mindmap/canvasShow";
 import {CanvasDraw} from "./mindmap/canvasDraw";
 
-
+import {DEFAULT_CANVAS_WIDTH, DEFAULT_CANVAS_HEIGHT} from "./mindmap/constants";
 
 
 $(document).ready(function(){
@@ -12,10 +12,10 @@ $(document).ready(function(){
     const canvasAction = canvas.getAttribute('data-canvas-action')
     switch(canvasAction){
         case 'DRAW':
-            canvasObj = new CanvasDraw(canvas, ctx)
+            canvasObj = new CanvasDraw(canvas, ctx, DEFAULT_CANVAS_WIDTH, DEFAULT_CANVAS_HEIGHT)
             break;
         default:
-            canvasObj = new CanvasShow(canvas, ctx)
+            canvasObj = new CanvasShow(canvas, ctx, DEFAULT_CANVAS_WIDTH, DEFAULT_CANVAS_HEIGHT)
             break;
     }
 

@@ -3,12 +3,12 @@ import {BubbleIdea} from '../mindmap/idea'
 
 
 export class Canvas{
-    constructor(canvas, ctx){
+    constructor(canvas, ctx, canvas_width, canvas_height){
         this.bubbles = []
         this.canvas = canvas;
         this.ctx = ctx;
-        this.canvas.width = 800;
-        this.canvas.height = 800;
+        this.canvas.width = canvas_width;
+        this.canvas.height = canvas_height;
         this.data = []
 
         this.background = new Image();
