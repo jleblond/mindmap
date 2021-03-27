@@ -25,7 +25,7 @@ Rails.application.routes.draw do
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
   root to: "home#index"
   resources :diagrams do
-    resource :canvas do
+    resource :canvas, except: [:edit, :update, :destroy] do
       get :draw
       resources :ideas do
         member do

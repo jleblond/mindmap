@@ -14,7 +14,8 @@ class DiagramsController < ApplicationController
 
   def create
     @diagram = current_user.diagrams.build(diagram_params)
-    if @diagram.save
+    @canvas = @diagram.build_canvas
+    if @diagram.save && @canvas.save
       flash[:notice] = "Diagram created!"
       redirect_to(edit_diagram_path(id: @diagram.id))
     else
@@ -28,7 +29,15 @@ class DiagramsController < ApplicationController
   end
 
   def update
+    @diagram = current_user.diagrams.find_by_id(params[:id])
+    @diagram.update(diagram_params)
+    return redirect_to diagrams_path
+  end
 
+  def destroy
+    @diagram = current_user.diagrams.find_by_id(params[:id])
+    @diagram.destroy
+    return redirect_to diagrams_path
   end
 
   private

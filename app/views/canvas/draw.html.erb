@@ -1,4 +1,4 @@
-<% canvas_background_url =  @canvas.has_background? ? url_for(@canvas.background) : nil %>
+<%# canvas_background_url =  @canvas.has_background? ? url_for(@canvas.background) : nil %>
 <% canvas_background_url =  image_url('default_background.png') %>
 <h4 style="text-align: center; margin-top: 3%;">Diagram <%= @canvas.diagram.name %></h4>
 <div class="" style="margin-top: 2%;">
@@ -15,7 +15,7 @@
     <div class="card" >
       <h5 class="card-header">Canvas</h5>
       <div class="card-body">
-        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+        <p class="card-text">While only you can draw and edit your canvas, anyone can preview your canvas by accessing the same view URL as yours.</p>
         <%= render partial: 'partials/canvas/actions_buttons', locals: {diagram: @canvas.diagram}%>
       </div>
     </div>

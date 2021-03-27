@@ -1,5 +1,5 @@
 <title><%= "Diagram #{@canvas.diagram.name}" %></title>
-<% canvas_background_url =  @canvas.has_background? ? url_for(@canvas.background) : nil %>
+<%# canvas_background_url =  @canvas.has_background? ? url_for(@canvas.background) : nil %>
 <% canvas_background_url =  image_url('default_background.png') %>
 <div class="" style="">
   <%= content_tag :canvas, '', id: 'myCanvas',
