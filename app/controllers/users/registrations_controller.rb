@@ -3,6 +3,9 @@
 class Users::RegistrationsController < Devise::RegistrationsController
   before_action :configure_sign_up_params, only: [:create]
   # before_action :configure_account_update_params, only: [:update]
+  #
+  before_action :authenticate_user!, :redirect_unless_admin,  only: [:new, :create]
+  skip_before_action :require_no_authentication, only: [:new, :create]
 
   # GET /resource/sign_up
   # def new
@@ -10,9 +13,19 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # end
 
   # POST /resource
-  # def create
-  #   super
-  # end
+  def create
+    build_resource(sign_up_params)
+
+    resource.save
+    yield resource if block_given?
+    if resource.persisted?
+      return redirect_to users_path
+    else
+      clean_up_passwords resource
+      set_minimum_password_length
+      respond_with resource
+    end
+  end
 
   # GET /resource/edit
   # def edit
@@ -39,6 +52,13 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # end
 
   protected
+
+  def redirect_unless_admin
+    unless current_user.try(:admin?)
+      flash[:error] = "Action requires administrator privileges"
+      redirect_to root_path
+    end
+  end
 
   # If you have extra params to permit, append them to the sanitizer.
   def configure_sign_up_params

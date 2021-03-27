@@ -3,6 +3,6 @@ class HomeController < ActionController::Base
   layout "application"
 
   def index
-
+    return redirect_to diagrams_path
   end
 end

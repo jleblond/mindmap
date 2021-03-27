@@ -1,11 +1,11 @@
 class DiagramsController < ApplicationController
   before_action :authenticate_user!
-  before_action :require_edit_permission, only: [:edit, :update]
+  before_action :require_edit_permission, only: [:edit, :update, :destroy]
 
   layout "application"
 
   def index
-    @diagrams = Diagram.all
+    @diagrams = current_user.diagrams
   end
 
   def new
@@ -24,7 +24,7 @@ class DiagramsController < ApplicationController
   end
 
   def edit
-    @diagram = Diagram.find_by_id(params[:id])
+    @diagram = current_user.diagrams.find_by_id(params[:id])
   end
 
   def update

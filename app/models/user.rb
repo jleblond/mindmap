@@ -11,6 +11,7 @@
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
 #  name                   :string           not null
+#  is_admin               :boolean
 #
 class User < ApplicationRecord
   # Include default devise modules. Others available are:
@@ -23,5 +24,10 @@ class User < ApplicationRecord
   has_many :diagrams, class_name: 'Diagram', foreign_key: :user_id
 
   validates :name, presence: true, length: { maximum: 50 }
+
+
+  def admin?
+    self.is_admin
+  end
 
 end
