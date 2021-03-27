@@ -2,7 +2,7 @@ import {Canvas} from "./canvas";
 import {getRequest, postRequest, putRequest} from "./api";
 import {BubbleIdea} from "./idea";
 import {DEFAULT_WIDTH, DEFAULT_HEIGHT, DEFAULT_BACKGROUND_COLOR, DEFAULT_TEXT_COLOR, DEFAULT_IDEA_LABEL} from "./constants";
-
+import {pointIsInEllipse} from "./utils"
 
 export class CanvasDraw extends Canvas {
     constructor(canvas, ctx, canvas_width, canvas_height){
@@ -17,7 +17,7 @@ export class CanvasDraw extends Canvas {
             DEFAULT_WIDTH, DEFAULT_HEIGHT,
             DEFAULT_IDEA_LABEL,
             DEFAULT_BACKGROUND_COLOR, DEFAULT_TEXT_COLOR))
-        this.drawAll(this.ctx)
+        this.displayBubbles(this.ctx)
 
         let create_idea_url = this.canvas.getAttribute('data-idea-url') + '?format=json'
         let data = { idea:
@@ -60,14 +60,15 @@ export class CanvasDraw extends Canvas {
 
         for(let index=0;index<this.bubbles.length;index++){
             const element = this.bubbles[index]
-            if (y > element.top && y < element.top + element.height
-                && x > element.left && x < element.left + element.width) {
+            if (pointIsInEllipse(x,y, element.x, element.y, element.rx, element.ry)) {
                 this.selectedBubbleID = element.id
                 this.isDrawing = true;
                 this.canvas.style.cursor = "grabbing";
 
                 let url = `/diagrams/${this.canvas.getAttribute('data-diagram-id')}/canvas/ideas/${this.selectedBubbleID}/edit?format=js`
                 getRequest(url)
+
+                element.drawLabel(this.ctx)
 
                 return;
             }
@@ -83,7 +84,6 @@ export class CanvasDraw extends Canvas {
 
         if( this.isDrawing) {
             const ctx = this.ctx
-            this.redrawBackground(ctx)
 
             let copy = new Object()
 
@@ -94,19 +94,18 @@ export class CanvasDraw extends Canvas {
                 }
                 this.bubbles = this.bubbles
             }
-
-            this.bubbles.push(new BubbleIdea(this.selectedBubbleID, x, y,
+            let newIdea = new BubbleIdea(this.selectedBubbleID, x, y,
                 copy.width, copy.height, copy.name,
-                copy.background_color, copy.text_color))
-            this.bubbles.forEach(function(bubble) {
-                bubble.draw(ctx)
-            });
+                copy.background_color, copy.text_color)
+            this.bubbles.push(newIdea)
+            this.displayBubbles(ctx)
+            newIdea.drawLabel(ctx)
         } else {
             this.canvas.style.cursor = 'crosshair';
             for(let index=0;index<this.bubbles.length;index++){
                 const element = this.bubbles[index]
-                if (y > element.top && y < element.top + element.height
-                    && x > element.left && x < element.left + element.width) {
+                if (pointIsInEllipse(x,y, element.x, element.y, element.rx, element.ry)) {
+
                     this.canvas.style.cursor = 'grab';
                     return;
                 }
@@ -124,6 +123,9 @@ export class CanvasDraw extends Canvas {
 
             this.isDrawing = false;
             this.selectedBubbleID = undefined;
+
+            const ctx = this.ctx
+            this.displayBubbles(ctx)
         }
     }
 

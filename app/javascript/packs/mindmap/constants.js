@@ -1,6 +1,6 @@
 // Canvas
-export const DEFAULT_CANVAS_WIDTH = 5312;
-export const DEFAULT_CANVAS_HEIGHT = 2988;
+export const DEFAULT_CANVAS_WIDTH = 1820;
+export const DEFAULT_CANVAS_HEIGHT = 1024;
 
 
 // Idea

@@ -1,5 +1,5 @@
 import {Canvas} from "./canvas";
-
+import {pointIsInEllipse} from "./utils"
 
 export class CanvasShow extends Canvas {
     constructor(canvas, ctx, canvas_width, canvas_height){
@@ -33,18 +33,22 @@ export class CanvasShow extends Canvas {
             y = event.pageY - this.elemTop;
 
         this.canvas.style.cursor = "default";
+        this.overIdeaIndex = undefined
 
         for(let index=0;index<this.bubbles.length;index++){
             const element = this.bubbles[index]
-            if (y > element.top && y < element.top + element.height
-                && x > element.left && x < element.left + element.width) {
+            if (pointIsInEllipse(x,y, element.x, element.y, element.rx, element.ry)) {
                 this.overIdeaIndex = index
                 let idea = this.data[this.overIdeaIndex]
+                element.drawLabel(this.ctx)
                 if(idea?.url){
                     this.canvas.style.cursor = "pointer";
                 }
                 return;
             }
+        }
+        if(!this.overIdeaIndex) {
+            this.displayBubbles(this.ctx);
         }
     }
 

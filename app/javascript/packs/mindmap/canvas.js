@@ -20,7 +20,7 @@ export class Canvas{
 
         this.background.onload = () => {
             this.ctx.drawImage(this.background, 0, 0)
-            this.drawAll(this.ctx);
+            this.displayBubbles(ctx)
         }
 
         this.elemLeft = this.canvas.offsetLeft + this.canvas.clientLeft
@@ -49,7 +49,7 @@ export class Canvas{
 
                     this.bubbles.push(new BubbleIdea(id, x, y, width, height, label, background_color, text_color));
                 }
-                this.drawAll(ctx);
+                this.displayBubbles(ctx);
             })
     }
 
@@ -58,10 +58,10 @@ export class Canvas{
         ctx.drawImage(this.background, 0, 0);
     }
 
-    drawAll = (ctx) => {
+    displayBubbles = (ctx) => {
         this.redrawBackground(ctx)
         this.bubbles.forEach(function(bubble) {
-            bubble.draw(ctx)
+            bubble.display(ctx)
         });
     }
 }

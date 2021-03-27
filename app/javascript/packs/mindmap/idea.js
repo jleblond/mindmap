@@ -11,6 +11,9 @@ export class BubbleIdea{
 
         this.left = (x - this.width/4);
         this.top = (y - this.height/4);
+
+        this.rx = this.width/22;
+        this.ry = this.height/8;
     }
 
     updatePosition(x, y){
@@ -20,22 +23,41 @@ export class BubbleIdea{
 
     redraw(ctx){
         this.erase(ctx)
-        this.draw(ctx)
+        this.drawLabel(ctx)
     }
 
     erase(ctx){
         ctx.clearRect(this.left, this.top, this.width/2, this.height/2);
     }
 
+    // Display the simple small bubble
+    // display(ctx) {
+    //     ctx.beginPath();
+    //     ctx.ellipse(this.x, this.y, this.rx, this.ry, 0, 0, Math.PI*2);
+    //     ctx.stroke()
+    // }
+
+    display(ctx) {
+        let startAngle = 0;
+        let endAngle = Math.PI * 2;
+        let stretchX = this.rx;
+        let stretchY = this.ry;
+        for (let angle = startAngle; angle < endAngle; angle += Math.PI / 180) {
+            ctx.beginPath()
+            ctx.moveTo(this.x, this.y)
+            ctx.lineTo(this.x + Math.cos(angle) * stretchX, this.y + Math.sin(angle) * stretchY)
+            ctx.lineWidth = 5
+            ctx.strokeStyle = this.background_color
+            ctx.stroke()
+            ctx.closePath()
+        }
+    }
 
 
-    // Display the Bubble
-    draw(ctx) {
-        // context.fillStyle = element.colour;
-        // doc: ellipse(x, y, radiusX, radiusY, rotation, startAngle, endAngle, anticlockwise)
-        // ctx.ellipse(this.x, this.y, this.radius, this.radius, 0, 0, Math.PI*2);
 
-        this.erase(ctx)
+    // Display the Idea
+    drawLabel(ctx) {
+        ctx.clearRect(this.left, this.top, this.width/2, this.height/2);
         ctx.fillStyle = this.background_color;
         ctx.fillRect(this.left, this.top, this.width/2, this.height/2);
 
