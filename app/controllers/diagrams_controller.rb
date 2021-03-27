@@ -15,6 +15,7 @@ class DiagramsController < ApplicationController
   def create
     @diagram = current_user.diagrams.build(diagram_params)
     @canvas = @diagram.build_canvas
+    @canvas.image_url = "default"
     if @diagram.save && @canvas.save
       flash[:notice] = "Diagram created!"
       redirect_to(edit_diagram_path(id: @diagram.id))
