@@ -60,9 +60,6 @@ export class Canvas{
 
     displayBubbles = (ctx) => {
         this.redrawBackground(ctx)
-        this.bubbles.forEach(function(bubble) {
-            bubble.display(ctx)
-        });
     }
 }
 

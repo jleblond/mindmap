@@ -12,6 +12,13 @@ export class CanvasDraw extends Canvas {
         this.loadData(ctx);
     }
 
+    displayBubbles = (ctx) => {
+        this.redrawBackground(ctx)
+        this.bubbles.forEach(function(bubble) {
+            bubble.display(ctx)
+        });
+    }
+
     createIdea(x, y){
         this.bubbles.push(new BubbleIdea(undefined, x, y,
             DEFAULT_WIDTH, DEFAULT_HEIGHT,

@@ -57,11 +57,6 @@ export class BubbleIdea{
 
     // Display the Idea
     drawLabel(ctx) {
-        ctx.clearRect(this.left, this.top, this.width/2, this.height/2);
-        ctx.fillStyle = this.background_color;
-        ctx.fillRect(this.left, this.top, this.width/2, this.height/2);
-
-
         ctx.font = "16px Georgia";
         ctx.fillStyle = this.text_color;
         ctx.fillText(this.name, this.left + this.width/8, this.top + this.height/4);
