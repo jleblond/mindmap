@@ -59,7 +59,7 @@ export class Canvas{
     }
 
     displayBubbles = (ctx) => {
-        this.redrawBackground(ctx)
+        throw 'displayBubbles function not implemented in child Canvas'
     }
 }
 

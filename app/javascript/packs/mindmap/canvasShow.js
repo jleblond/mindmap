@@ -8,6 +8,11 @@ export class CanvasShow extends Canvas {
         this.loadData(ctx);
     }
 
+    displayBubbles = (ctx) => {
+        // For canvas SHOW, bubble ideas are not displayed, hence we only redraw the background
+        this.redrawBackground(ctx)
+    }
+
     mouseDownEvent = (event) => {
         let x = event.pageX - this.elemLeft,
             y = event.pageY - this.elemTop;
