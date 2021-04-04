@@ -1,11 +1,11 @@
 class CanvasController < ApplicationController
-  before_action :authenticate_user!, except: [:show]
+  before_action :authenticate_user!, except: [:show, :preview]
   before_action :require_edit_permission, only: [:edit, :update, :draw, :destroy]
   before_action :set_diagram
 
-  before_action :allow_iframe_requests, only: [:show]
+  before_action :allow_iframe_requests, only: [:show, :preview]
 
-  layout "canvas" # except for '#show', '#edit' and "#new"
+  layout "canvas" # except for '#show', '#preview', '#edit' and "#new"
 
   def index
     @canvases = Canvas.all
@@ -36,6 +36,17 @@ class CanvasController < ApplicationController
     end
   end
 
+  def preview
+    @canvas = @diagram.canvas
+    respond_to do |format|
+      format.html { render :layout => false }
+    end
+  end
+
+  def draw
+    @canvas = @diagram.canvas
+  end
+
   def edit
     @canvas = @diagram.canvas
     respond_to do |format|
@@ -55,14 +66,6 @@ class CanvasController < ApplicationController
     @canvas = @diagram.canvas
     @canvas.destroy
     return redirect_to edit_diagram_path(@diagram)
-  end
-
-  def draw
-    @canvas = @diagram.canvas
-  end
-
-  def preview
-    @canvas = @diagram.canvas
   end
 
   private
