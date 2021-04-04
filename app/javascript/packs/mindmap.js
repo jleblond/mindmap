@@ -1,4 +1,5 @@
 import {CanvasShow} from "./mindmap/canvasShow";
+import {CanvasPreview} from "./mindmap/canvasPreview";
 import {CanvasDraw} from "./mindmap/canvasDraw";
 
 import {DEFAULT_CANVAS_WIDTH, DEFAULT_CANVAS_HEIGHT} from "./mindmap/constants";
@@ -13,6 +14,9 @@ $(document).ready(function(){
     switch(canvasAction){
         case 'DRAW':
             canvasObj = new CanvasDraw(canvas, ctx, DEFAULT_CANVAS_WIDTH, DEFAULT_CANVAS_HEIGHT)
+            break;
+        case 'PREVIEW':
+            canvasObj = new CanvasPreview(canvas, ctx, DEFAULT_CANVAS_WIDTH, DEFAULT_CANVAS_HEIGHT)
             break;
         default:
             canvasObj = new CanvasShow(canvas, ctx, DEFAULT_CANVAS_WIDTH, DEFAULT_CANVAS_HEIGHT)

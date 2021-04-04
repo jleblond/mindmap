@@ -61,6 +61,10 @@ class CanvasController < ApplicationController
     @canvas = @diagram.canvas
   end
 
+  def preview
+    @canvas = @diagram.canvas
+  end
+
   private
 
   def set_diagram

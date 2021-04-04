@@ -27,6 +27,7 @@ Rails.application.routes.draw do
   resources :diagrams do
     resource :canvas, except: [:edit, :update, :destroy] do
       get :draw
+      get :preview
       resources :ideas do
         member do
           put :update_position
